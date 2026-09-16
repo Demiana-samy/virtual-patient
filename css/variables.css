@@ -1,0 +1,37 @@
+:root {
+  /* Surfaces */
+  --surface-page: #F4F3EE;
+  --surface-card: #FFFFFF;
+  --surface-panel: #EFF4F6;
+
+  /* Text */
+  --text-primary: #1A1A1A;
+  --text-secondary: #6B6B68;
+
+  /* Borders & accents */
+  --border: rgba(0, 0, 0, 0.08);
+  --accent-bg: #E6F1FB;
+  --accent-text: #0C447C;
+  --brand-bg: #0F6E56;
+  --brand-text: #FFFFFF;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+
+  /* Typography */
+  --font-family: -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* Shadows */
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+}

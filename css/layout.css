@@ -1,0 +1,69 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background-color: var(--surface-page);
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-md);
+  max-width: 1200px;
+  height: 100vh;
+  margin: 0 auto;
+  padding: var(--space-md);
+}
+
+/* Chat panel — primary column (~60%) */
+.chat-panel {
+  display: flex;
+  flex-direction: column;
+  flex: 3 1 0;
+  min-width: 0;
+  background: var(--surface-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+/* Sidebar — secondary column (~40%) */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  flex: 2 1 0;
+  min-width: 0;
+}
+
+@media (max-width: 720px) {
+  .app {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .chat-panel {
+    flex: none;
+    min-height: 60vh;
+  }
+
+  .sidebar {
+    flex: none;
+  }
+}

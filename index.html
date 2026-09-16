@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المريض الافتراضي</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/results.css">
+  <link rel="stylesheet" href="css/caseSelector.css">
+</head>
+<body>
+  <div class="case-selector" id="case-selector" hidden></div>
+  <div class="results-view" id="results-view" hidden></div>
+
+  <div class="app" id="app" hidden>
+
+    <!-- Chat panel (primary column) -->
+    <main class="chat-panel">
+      <header class="chat-header">
+        <div class="patient-avatar" id="patient-initials" aria-hidden="true"></div>
+        <div class="patient-info">
+          <div class="patient-name" id="patient-name"></div>
+          <div class="patient-meta" id="patient-meta"></div>
+        </div>
+        <div class="session-timer" aria-label="مدة الجلسة">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/>
+            <polyline points="12 7 12 12 15.5 14"/>
+          </svg>
+          <span id="session-time"></span>
+        </div>
+      </header>
+
+      <div class="message-list" id="message-list" role="log" aria-live="polite" aria-label="سجل المحادثة"></div>
+
+      <div class="chat-input-row">
+        <input
+          type="text"
+          class="chat-input"
+          id="chat-input"
+          placeholder="اكتب سؤالك للمريض..."
+          autocomplete="off"
+          aria-label="رسالة للمريض"
+        >
+        <button type="button" class="btn-send" id="btn-send" aria-label="إرسال">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="19" y1="12" x2="5" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+          </svg>
+        </button>
+      </div>
+    </main>
+
+    <!-- Action sidebar -->
+    <aside class="sidebar">
+
+      <section class="panel-card" aria-labelledby="exam-title">
+        <div class="panel-card__header">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+          <h2 class="panel-card__title" id="exam-title">الفحص السريري</h2>
+        </div>
+        <ul class="investigation-list" id="exam-list"></ul>
+      </section>
+
+      <section class="panel-card" aria-labelledby="investigation-title">
+        <div class="panel-card__header">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 4h3a3 3 0 0 1 3 3v1"/>
+            <path d="M18 4h-3a3 3 0 0 0-3 3v1"/>
+            <path d="M6 8v8a4 4 0 0 0 8 0V8"/>
+            <circle cx="18" cy="18" r="3"/>
+            <path d="M20.5 20.5L22 22"/>
+          </svg>
+          <h2 class="panel-card__title" id="investigation-title">طلب فحص</h2>
+          <span class="facts-progress" id="facts-progress" aria-live="polite"></span>
+        </div>
+        <ul class="investigation-list" id="investigation-list"></ul>
+      </section>
+
+      <section class="panel-card" aria-labelledby="diagnosis-title">
+        <div class="panel-card__header">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+            <rect x="9" y="3" width="6" height="4" rx="1"/>
+            <line x1="9" y1="12" x2="15" y2="12"/>
+            <line x1="9" y1="16" x2="13" y2="16"/>
+          </svg>
+          <h2 class="panel-card__title" id="diagnosis-title">التشخيص النهائي</h2>
+        </div>
+        <form class="diagnosis-form" onsubmit="return false;">
+          <select class="diagnosis-select" id="diagnosis-select" aria-label="اختيار التشخيص"></select>
+          <button type="button" class="btn-confirm" id="btn-confirm" disabled>تأكيد التشخيص</button>
+        </form>
+      </section>
+
+    </aside>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+export const appendicitisCase = {
+  id: 'appendicitis',
+  displayName: 'التهاب الزائدة الدودية',
+
+  patient: {
+    name: 'منى',
+    age: 22,
+    gender: 'female',
+    chiefComplaint: 'ألم في أسفل البطن ناحية اليمين',
+  },
+
+  patientBackstory: `أنا منى، عندي ٢٢ سنة. من امبارح بالليل بدأ يوجعني بطني حوالين السُرة، كنت فاكرة إنه عُصابة أو حاجة أكلتها مش كويسة. بعد كام ساعة الألم اتحرك لتحت وناحية اليمين، ودلوقتي وجعي كله هناك. وجعي خفيف في الأول وبقى أقوى تدريجياً، ومش بيروح خالص. معاه غثيان واتقيأت مرة واحدة، وماكلتش حاجة من امبارح. حرارتي كانت ٣٧٫٨ امبارح، ودلوقتي حوالي ٣٧٫٩. لما بتحرك أو بسعل الألم بيزيد. آخر دورة شهرية كانت من ١٠ أيام، ومن ساعتها مفيش نزيف غير طبيعي. مفيش حرقان في البول ولا كثرة في التبول. ده أول مرة يحصلي كده، وأنا قلقانة أوي.`,
+
+  facts: [
+    {
+      id: 'onset',
+      clinicalFact: 'Pain started approximately 12 hours ago, initially periumbilical',
+      patientAnswer: 'بدأ الألم من حوالي ١٢ ساعة، كان حوالين السُرة في الأول',
+      keywords: ['امتى بدأ', 'من امتى', 'بداية الألم', 'متى بدأ', 'من متى', 'onset', 'بدأ امتى'],
+      critical: true,
+      feedbackNote: 'تحديد وقت البداية يساعد في تمييز الحالات الحادة عن المزمنة',
+    },
+    {
+      id: 'migration',
+      clinicalFact: 'Pain migrated from periumbilical region to right lower quadrant',
+      patientAnswer: 'الألم اتحرك بعدين لتحت وناحية اليمين، ودلوقتي وجعي كله هناك',
+      keywords: ['اتحرك', 'انتقل', 'مكان الألم دلوقتي', 'فين الألم', 'وين وجعك', 'migration', 'تحرك'],
+      critical: true,
+      feedbackNote: 'من أهم علامات التهاب الزائدة الدودية',
+    },
+    {
+      id: 'pain_character',
+      clinicalFact: 'Progressively worsening constant pain localized to RLQ',
+      patientAnswer: 'وجعي ثابت ومش بيروح، بيزيد تدريجياً، ومركز في أسفل البطن يمين',
+      keywords: ['نوع الألم', 'شكل الألم', 'وصف الألم', 'وجعك عامل إزاي', 'character', 'ثابت', 'حاد'],
+      critical: true,
+      feedbackNote: 'الألم الثابت المتزايد في أسفل البطن يمين يدعم التهاب الزائدة',
+    },
+    {
+      id: 'fever',
+      clinicalFact: 'Low-grade fever (37.8–37.9°C) since onset',
+      patientAnswer: 'حرارتي كانت ٣٧٫٨ امبارح، ودلوقتي حوالي ٣٧٫٩',
+      keywords: ['حرارة', 'سخونة', 'حمى', 'fever', 'temperature', 'سخنت'],
+      critical: true,
+      feedbackNote: 'الحمى منخفضة الدرجة شائعة مع التهاب الزائدة وتدعم وجود التهاب',
+    },
+    {
+      id: 'nausea',
+      clinicalFact: 'Nausea present; one episode of non-bilious vomiting',
+      patientAnswer: 'حاسة بغثيان من امبارح، واتقيأت مرة واحدة',
+      keywords: ['غثيان', 'تقيؤ', 'ترجيع', 'nausea', 'vomiting', 'عايزة أتقيأ'],
+      critical: true,
+      feedbackNote: 'الغثيان والتقيؤ أعراض مرافقة شائعة في التهاب الزائدة',
+    },
+    {
+      id: 'anorexia',
+      clinicalFact: 'Complete anorexia since symptom onset',
+      patientAnswer: 'ماكلتش حاجة خالص من امبارح، مفيش أي شهية',
+      keywords: ['شهية', 'أكل', 'appetite', 'anorexia', 'جوع', 'اكلت'],
+      critical: true,
+      feedbackNote: 'فقدان الشهية علامة مبكرة مهمة في التهاب الزائدة',
+    },
+    {
+      id: 'bowel_habits',
+      clinicalFact: 'No diarrhea or constipation; last normal bowel movement yesterday',
+      patientAnswer: 'مفيش إسهال ولا إمساك، آخر مرة تبرزت فيها امبارح وكان طبيعي',
+      keywords: ['براز', 'إسهال', 'إمساك', 'bowel', 'stool', 'تبرز', 'هضم'],
+      critical: false,
+      feedbackNote: 'استبعاد الإسهال يساعد في التفريق عن التهاب المعدة والأمعاء',
+    },
+    {
+      id: 'peritoneal_signs',
+      clinicalFact: 'Pain worsens with movement, coughing, and walking',
+      patientAnswer: 'لما بتحرك أو بسعل أو أمشي الألم بيزيد أوي',
+      keywords: ['حركة', 'سعال', 'مشي', 'peritoneal', 'بيزيد لما', 'تتحركي', 'تسعلي'],
+      critical: true,
+      feedbackNote: 'زيادة الألم مع الحركة تدعم وجود تهيج صفاقي',
+    },
+    {
+      id: 'lmp',
+      clinicalFact: 'Last menstrual period 10 days ago; regular cycles; not currently pregnant (patient unaware of test result)',
+      patientAnswer: 'آخر دورة شهرية كانت من ١٠ أيام، دورتي منتظمة ومفيش نزيف غير طبيعي',
+      keywords: ['دورة شهرية', 'LMP', 'حيض', 'آخر دورة', 'حامل', 'pregnancy', 'menstrual'],
+      critical: true,
+      feedbackNote: 'مهم لاستبعاد الحمل والحالات الحوضية في الإناث الشابات',
+    },
+    {
+      id: 'urinary_symptoms',
+      clinicalFact: 'No dysuria, frequency, or hematuria',
+      patientAnswer: 'مفيش حرقان في البول ولا كثرة في التبول ولا دم في البول',
+      keywords: ['بول', 'تبول', 'حرقان', 'urinary', 'UTI', 'تكرار'],
+      critical: false,
+      feedbackNote: 'يساعد في استبعاد التهاب المسالك البولية كسبب لألم البطن',
+    },
+    {
+      id: 'past_episodes',
+      clinicalFact: 'No similar previous episodes of abdominal pain',
+      patientAnswer: 'لا، ده أول مرة يحصلي ألم زي ده',
+      keywords: ['حصل قبل', 'مرة قبل', 'previous', 'history', 'زي كده قبل', 'مش أول مرة'],
+      critical: false,
+      feedbackNote: 'أول حدوث يدعم تشخيصاً حاداً وليس نوبات متكررة',
+    },
+    {
+      id: 'vaginal_discharge',
+      clinicalFact: 'No abnormal vaginal discharge or pelvic pain separate from RLQ pain',
+      patientAnswer: 'مفيش إفرازات غريبة ولا ألم في الحوض غير وجع البطن اليمين',
+      keywords: ['إفرازات', 'حوض', 'pelvic', 'discharge', 'مهبل'],
+      critical: false,
+      feedbackNote: 'يساعد في استبعاد التهابات الحوض أو مشاكل gynecologic',
+    },
+    {
+      id: 'medications_allergies',
+      clinicalFact: 'No regular medications; no known drug allergies',
+      patientAnswer: 'مباخدش أدوية بانتظام ومفيش عندي حساسية من أي دواء',
+      keywords: ['أدوية', 'حساسية', 'medications', 'allergies', 'دواء'],
+      critical: false,
+      feedbackNote: 'مهم قبل أي تدخّل دوائي أو جراحي',
+    },
+  ],
+
+  physicalExam: {
+    general: {
+      label: 'الفحص العام',
+      result: 'المريضة تبدو في ألم وتتحرك بحذر شديد، الحرارة 37.9°م، النبض 92/دقيقة، ضغط الدم 118/75 مم زئبق',
+      relevant: true,
+      feedbackNote: 'تقييم العلامات الحيوية والمظهر العام أساسي لتحديد درجة التأثر والإجهاد الحاد',
+    },
+    abdominal: {
+      label: 'فحص البطن',
+      result: 'ألم شديد عند الضغط في نقطة ماكبرني (McBurney\'s point)، مع وجود ألم مرتد (rebound tenderness) وتشنج دفاعي (guarding) في الربع السفلي الأيمن',
+      relevant: true,
+      feedbackNote: 'فحص البطن ووجود ألم مرتد وتشنج في أسفل البطن يمين من أهم العلامات السريرية لتأكيد التهاب الزائدة',
+    },
+    chest: {
+      label: 'تسمّع الصدر',
+      result: 'أصوات التنفس طبيعية في كلا الرئتين، لا توجد حشرجة أو خرير',
+      relevant: false,
+      feedbackNote: 'تسمّع الصدر فحص روتيني لاستبعاد المشاكل التنفسية ولكنه ليس الفحص الرئيسي لألم البطن الحاد',
+    },
+    special_signs: {
+      label: 'علامات الزائدة الخاصة (Psoas & Obturator)',
+      result: 'إيجابية علامة العضلة القطنية (Psoas sign) وعلامة المُسدّة (Obturator sign) على الجانب الأيمن',
+      relevant: true,
+      feedbackNote: 'إيجابية علامتي القطنية والمُسدّة تؤكد وجود تهيج صفاقي مجاور للزائدة الملتهبة',
+    },
+  },
+
+
+  investigations: [
+    {
+      id: 'cbc',
+      label: 'تحليل دم كامل',
+      result: 'ارتفاع في كرات الدم البيضاء (WBC: 14,000/µL) مع زيادة طفيفة في عدد العدلات (Neutrophils: 82%)',
+      relevant: true,
+      feedbackNote: 'يرفع الشك في عملية التهابية بارتفاع كرات الدم البيضاء',
+    },
+    {
+      id: 'abdominal_us',
+      label: 'سونار بطن',
+      result: 'زائدة دودية غير قابلة للضغط، قطرها ٩ مم، مع زيادة في سمك جدارها ودهون حولها — يتفق مع التهاب الزائدة الدودية',
+      relevant: true,
+      feedbackNote: 'الفحص التصويري الأساسي لتأكيد التهاب الزائدة الدودية',
+    },
+    {
+      id: 'urinalysis',
+      label: 'تحليل بول',
+      result: 'طبيعي — لا صبغة صفراوية ولا نترات ولا كريات بيض في البول',
+      relevant: false,
+      feedbackNote: 'يستبعد التهاب المسالك البولية كسبب لألم البطن',
+    },
+    {
+      id: 'pregnancy_test',
+      label: 'تحليل حمل',
+      result: 'سلبي',
+      relevant: false,
+      feedbackNote: 'ضروري قبل التصوير أو التدخل في الإناث في سن الإنجاب',
+    },
+    {
+      id: 'crp',
+      label: 'CRP',
+      result: 'مرتفع (CRP: 48 mg/L) — يتفق مع عملية التهابية حادة',
+      relevant: true,
+      feedbackNote: 'يدعم وجود التهاب حاد في الجسم',
+    },
+  ],
+
+  correctDiagnosis: 'التهاب الزائدة الدودية',
+
+  diagnosisOptions: [
+    'التهاب الزائدة الدودية',
+    'التهاب المسالك البولية',
+    'كيس على المبيض',
+    'حمل خارج الرحم',
+    'التهاب المعدة والأمعاء',
+  ],
+
+  differentials: [
+    'التهاب المسالك البولية',
+    'كيس على المبيض / التواء المبيض',
+    'حمل خارج الرحم',
+    'التهاب المعدة والأمعاء',
+  ],
+};

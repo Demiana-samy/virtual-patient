@@ -1,0 +1,200 @@
+export const anemiaCase = {
+  id: 'iron_deficiency_anemia',
+  displayName: 'فقر دم نقص الحديد',
+
+  patient: {
+    name: 'سارة',
+    age: 28,
+    gender: 'female',
+    chiefComplaint: 'تعب ودوخة من شهور',
+  },
+
+  patientBackstory: `أنا سارة، عندي ٢٨ سنة. من حوالي ٣ شهور بحس بتعب مستمر طول اليوم، حتى لو نمت كويس. صحبتي قالتلي إني شكّلي شاحب. بدوّخ لما أقوم بسرعة، وبحس بضيق نفس لو طلعت ٢–٣ طوابق. دورتي الشهرية ثقيلة من زمان — بتقعد ٧ أيام ومحتاجة أغيّر الفوطة كل ٢–٣ ساعات في أول ٣ أيام. بقى عندي craving غريب للثلج من فترة. أظافري بقت هشة وبتتكسر بسهولة. أنا نباتية من ٤ سنين وباكل قليل لحوم ومكسرات. مفيش دم في البراز ولا أسود، ومفيش ألم بطن أو حرقان. مفيش تاريخ عيلة لفقر دم، ومباخدش أدوية بانتظام.`,
+
+  facts: [
+    {
+      id: 'fatigue',
+      clinicalFact: 'Progressive fatigue for approximately 3 months, persistent throughout the day',
+      patientAnswer: 'من ٣ شهور تعبانة طول اليوم، حتى لو نمت كويس',
+      keywords: ['تعب', 'إرهاق', 'fatigue', 'تعبان', 'خمول', 'weakness'],
+      critical: true,
+      feedbackNote: 'التعب المستمر العرض الرئيسي لفقر الدم',
+    },
+    {
+      id: 'onset_duration',
+      clinicalFact: 'Gradual onset over 3 months',
+      patientAnswer: 'الأعراض بدأت تدريجياً من حوالي ٣ شهور',
+      keywords: ['امتى بدأ', 'من امتى', 'مدة', 'تدريجي', 'onset', 'كم شهر'],
+      critical: true,
+      feedbackNote: 'البداية التدريجية تتوافق مع فقر الدم المزمن وليس النزف الحاد',
+    },
+    {
+      id: 'pallor',
+      clinicalFact: 'Pallor noticed by a friend; patient confirms feeling pale',
+      patientAnswer: 'صحبتي قالتلي إني شكّلي شاحب، وأنا حاسة بكده',
+      keywords: ['شاحب', 'pallor', 'لون', 'وجه', 'شفايف', 'بياض'],
+      critical: true,
+      feedbackNote: 'الشحوب علامة سريرية مهمة على انخفاض الهيموجلوبين',
+    },
+    {
+      id: 'dizziness',
+      clinicalFact: 'Orthostatic lightheadedness on standing quickly',
+      patientAnswer: 'بدوّخ لما أقوم بسرعة من الكرسي أو السرير',
+      keywords: ['دوخة', 'dizziness', 'lightheaded', 'دوّخ', 'إغماء'],
+      critical: true,
+      feedbackNote: 'الدوخة الانتصابية شائعة مع انخفاض حجم الدم الدائري',
+    },
+    {
+      id: 'dyspnea_exertion',
+      clinicalFact: 'Dyspnea on climbing 2–3 flights of stairs (new for patient)',
+      patientAnswer: 'بحس بضيق نفس لو طلعت ٢–٣ طوابق — ده جديد عليا',
+      keywords: ['ضيق نفس', 'dyspnea', 'تنفس', 'سلالم', 'مجهود', 'SOB'],
+      critical: true,
+      feedbackNote: 'ضيق النفس مع المجهود يعكس قلة أكسجة الأنسجة',
+    },
+    {
+      id: 'menorrhagia',
+      clinicalFact: 'Heavy menstrual bleeding: 7-day periods, changing pad every 2–3 hours for first 3 days',
+      patientAnswer: 'دورتي ثقيلة — ٧ أيام وبغيّر الفوطة كل ٢–٣ ساعات في أول ٣ أيام',
+      keywords: ['دورة', 'حيض', 'نزيف', 'menstrual', 'menorrhagia', 'شهرية', 'LMP', 'دورة شهرية'],
+      critical: true,
+      feedbackNote: 'غزارة الطمث سبب شائع لفقد الحديد عند النساء',
+    },
+    {
+      id: 'pica',
+      clinicalFact: 'Craving for ice (pagophagia) for several weeks',
+      patientAnswer: 'بقى عندي craving غريب للثلج من فترة',
+      keywords: ['pica', 'ثلج', 'ice', 'شهية غريبة', 'craving', 'أكل غريب'],
+      critical: true,
+      feedbackNote: 'شهية الثلج (pagophagia) علامة معروفة لنقص الحديد',
+    },
+    {
+      id: 'no_gi_bleeding',
+      clinicalFact: 'No melena, hematochezia, or abdominal pain suggesting GI blood loss',
+      patientAnswer: 'مفيش دم في البراز ولا لون أسود، ومفيش ألم بطن',
+      keywords: ['براز', 'دم', 'أسود', 'melena', 'GI', 'نزيف', 'هضم', 'معدة'],
+      critical: true,
+      feedbackNote: 'استبعاد نزيف GI يوجّه البحث عن سبب gynecologic',
+    },
+    {
+      id: 'brittle_nails',
+      clinicalFact: 'Brittle, easily breaking nails (koilonychia not yet obvious)',
+      patientAnswer: 'أظافري بقت هشة وبتتكسر بسهولة',
+      keywords: ['أظافر', 'nails', 'هش', 'brittle', 'koilonychia'],
+      critical: false,
+      feedbackNote: 'هشاشة الأظافر علامة داعمة لنقص الحديد المزمن',
+    },
+    {
+      id: 'diet',
+      clinicalFact: 'Vegetarian diet for 4 years with limited iron-rich foods',
+      patientAnswer: 'أنا نباتية من ٤ سنين وباكل قليل لحوم ومكسرات',
+      keywords: ['أكل', 'نباتي', 'diet', 'غذاء', 'حديد', 'vegetarian', 'لحوم'],
+      critical: false,
+      feedbackNote: 'النظام النباتي قد يقلل مدخول الحديد ويزيد خطر النقص',
+    },
+    {
+      id: 'family_history',
+      clinicalFact: 'No family history of anemia or hemoglobinopathy',
+      patientAnswer: 'مفيش في العيلة حد عنده فقر دم أو أمراض دم',
+      keywords: ['عيلة', 'family', 'وراثة', 'تاريخ عائلي', 'thalassemia'],
+      critical: false,
+      feedbackNote: 'يساعد في استبعاد ثلاسيميا أو اضطرابات دم وراثية',
+    },
+    {
+      id: 'medications_allergies',
+      clinicalFact: 'No regular medications; no known drug allergies',
+      patientAnswer: 'مباخدش أدوية بانتظام ومفيش عندي حساسية من أي دواء',
+      keywords: ['أدوية', 'حساسية', 'medications', 'allergies', 'دواء'],
+      critical: false,
+      feedbackNote: 'مهم قبل وصف الحديد أو أي علاج',
+    },
+  ],
+
+  physicalExam: {
+    general: {
+      label: 'الفحص العام',
+      result: 'المريضة واعية ومستقرة، لوحظ شحوب ملحوظ في الملتحمة والجلد، الحرارة 36.8°م، النبض 88/دقيقة، ضغط الدم 110/70 مم زئبق',
+      relevant: true,
+      feedbackNote: 'ملاحظة الشحوب في الملتحمة والجلد فحص سريري مباشر يدعم فقر الدم',
+    },
+    abdominal: {
+      label: 'فحص البطن',
+      result: 'البطن لينة وغير مؤلمة، لا يوجد تضخم في الطحال أو الكبد، ولا توجد كتل ملموسة',
+      relevant: false,
+      feedbackNote: 'فحص البطن يستبعد تضخم الطحال أو أسباب النزف الهضمي المباشرة',
+    },
+    chest: {
+      label: 'تسمّع الصدر',
+      result: 'أصوات التنفس طبيعية في كلا الرئتين، لا توجد خرير أو حشرجة',
+      relevant: false,
+      feedbackNote: 'تسمّع الصدر روتيني لاستبعاد الأسباب التنفسية لضيق التنفس',
+    },
+    pelvic: {
+      label: 'الفحص النظري للنساء والحوض',
+      result: 'عدم وجود كتل حوضية ملموسة أو ألم عند الفحص، مع وجود علامات نزيف طمثي غزير سابق',
+      relevant: true,
+      feedbackNote: 'فحص الحوض يقيّم السبب النزفي الأكثر ترجيحاً (غزارة الطمث) ويستبعد الآفات الحوضية',
+    },
+    nails_mouth: {
+      label: 'فحص الأظافر واللسان',
+      result: 'أظافر هشة ومسطحة (علامات تقعر الأظافر المبكرة)، مع شحوب الغشاء المخاطي للفم ولسان أملس',
+      relevant: true,
+      feedbackNote: 'هشاشة الأظافر وتغيرات اللسان والفم من العلامات النسيجية المميزة لنقص الحديد المزمن',
+    },
+  },
+
+
+  investigations: [
+    {
+      id: 'full_blood_count',
+      label: 'تحليل دم كامل',
+      result: 'Hb: 9.2 g/dL، MCV: 72 fL — فقر دم hypochromic microcytic',
+      relevant: true,
+      feedbackNote: 'يؤكد فقر الدم microcytic hypochromic المُميِّز لنقص الحديد',
+    },
+    {
+      id: 'ferritin',
+      label: 'فيريتين',
+      result: 'فيريتين منخفض (8 ng/mL) — يدعم نقص مخزون الحديد',
+      relevant: true,
+      feedbackNote: 'انخفاض الفيريتين يثبت نقص مخزون الحديد',
+    },
+    {
+      id: 'peripheral_smear',
+      label: 'مسح دم peripheral',
+      result: 'كريات حمراء صغيرة hypochromic microcytic — يتفق مع نقص الحديد',
+      relevant: true,
+      feedbackNote: 'مسح الدم يدعم تشخيص نقص الحديد morphologically',
+    },
+    {
+      id: 'stool_occult',
+      label: 'تحليل براز للدم الخفي',
+      result: 'سلبي — لا دم خفي في البراز',
+      relevant: false,
+      feedbackNote: 'يستبعد نزيف gastrointestinal كمصدر لفقد الحديد',
+    },
+    {
+      id: 'b12_folate',
+      label: 'B12 و folate',
+      result: 'B12 و folate ضمن المعدل الطبيعي',
+      relevant: false,
+      feedbackNote: 'يستبعد فقر الدم macrocytic بسبب نقص B12 أو folate',
+    },
+  ],
+
+  correctDiagnosis: 'فقر دم نقص الحديد',
+
+  diagnosisOptions: [
+    'فقر دم نقص الحديد',
+    'فقر دم الأمراض المزمنة',
+    'ثلاسيميا بسيطة',
+    'فقر دم بسبب نقص B12',
+    'فقر دم تلاشي النقي',
+  ],
+
+  differentials: [
+    'فقر دم الأمراض المزمنة',
+    'ثلاسيميا بسيطة',
+    'فقر دم بسبب نقص B12',
+  ],
+};
