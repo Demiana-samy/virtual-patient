@@ -15,42 +15,42 @@ function factTopicPhrase(fact) {
  * @param {{ patientAnswer: string, feedbackNote: string }} fact
  */
 function factAskedSentence(fact) {
-  return `سألتِ عن ${factTopicPhrase(fact)}، و${fact.feedbackNote}`;
+  return `سألتِ عن ${factTopicPhrase(fact)}: ${fact.feedbackNote}`;
 }
 
 /**
  * @param {{ patientAnswer: string, feedbackNote: string }} fact
  */
 function factMissedSentence(fact) {
-  return `فاتك السؤال عن ${factTopicPhrase(fact)}، و${fact.feedbackNote}`;
+  return `فاتك السؤال عن ${factTopicPhrase(fact)}: ${fact.feedbackNote}`;
 }
 
 /**
  * @param {{ label: string, feedbackNote: string }} investigation
  */
 function investigationOrderedSentence(investigation) {
-  return `طلبتِ ${investigation.label}، و${investigation.feedbackNote}`;
+  return `طلبتِ ${investigation.label}: ${investigation.feedbackNote}`;
 }
 
 /**
  * @param {{ label: string, feedbackNote: string }} investigation
  */
 function investigationMissedSentence(investigation) {
-  return `فاتك طلب ${investigation.label}، و${investigation.feedbackNote}`;
+  return `فاتك طلب ${investigation.label}: ${investigation.feedbackNote}`;
 }
 
 /**
  * @param {{ label: string, feedbackNote: string }} exam
  */
 function examPerformedSentence(exam) {
-  return `أجريتِ ${exam.label}، و${exam.feedbackNote}`;
+  return `أجريتِ ${exam.label}: ${exam.feedbackNote}`;
 }
 
 /**
  * @param {{ label: string, feedbackNote: string }} exam
  */
 function examMissedSentence(exam) {
-  return `فاتك إجراء ${exam.label}، و${exam.feedbackNote}`;
+  return `فاتك إجراء ${exam.label}: ${exam.feedbackNote}`;
 }
 
 /**
@@ -58,42 +58,38 @@ function examMissedSentence(exam) {
  * @param {object} caseData
  */
 export function computeScore(sessionState, caseData) {
-  if (!sessionState) {
+  if (!sessionState || !caseData) {
     return emptyScore();
   }
 
-  const askedSet = new Set(sessionState.askedFacts);
-  const orderedList = sessionState.orderedInvestigations;
+  const askedSet = new Set(sessionState.askedFacts || []);
+  const orderedList = sessionState.orderedInvestigations || [];
   const performedSet = new Set(sessionState.performedExams || []);
 
+  // 1. History Taking Subscore (0 - 100)
   const criticalFacts = caseData.facts.filter((f) => f.critical);
   const nonCriticalFacts = caseData.facts.filter((f) => !f.critical);
 
+  const criticalAsked = criticalFacts.filter((f) => askedSet.has(f.id)).length;
+  const nonCriticalAsked = nonCriticalFacts.filter((f) => askedSet.has(f.id)).length;
+
+  const criticalScore = criticalFacts.length > 0 ? (criticalAsked / criticalFacts.length) * 100 : 100;
+  const nonCriticalScore =
+    nonCriticalFacts.length > 0 ? (nonCriticalAsked / nonCriticalFacts.length) * 100 : 100;
+
+  const historyTaking = roundScore(criticalScore * 0.85 + nonCriticalScore * 0.15);
+
+  // 2. Clinical Examination Subscore (0 - 100)
   const physicalExamEntries = caseData.physicalExam ? Object.entries(caseData.physicalExam) : [];
   const relevantExams = physicalExamEntries.filter(([_, exam]) => exam.relevant);
-  const nonRelevantExams = physicalExamEntries.filter(([_, exam]) => !exam.relevant);
 
-  const totalImportant = criticalFacts.length + relevantExams.length;
-  const importantAsked =
-    criticalFacts.filter((f) => askedSet.has(f.id)).length +
-    relevantExams.filter(([key]) => performedSet.has(key)).length;
+  const relevantExamsPerformed = relevantExams.filter(([key]) => performedSet.has(key)).length;
 
-  const totalNonImportant = nonCriticalFacts.length + nonRelevantExams.length;
-  const nonImportantAsked =
-    nonCriticalFacts.filter((f) => askedSet.has(f.id)).length +
-    nonRelevantExams.filter(([key]) => performedSet.has(key)).length;
+  const examRaw =
+    relevantExams.length > 0 ? (relevantExamsPerformed / relevantExams.length) * 100 : 100;
+  const clinicalExamination = roundScore(examRaw);
 
-  let historyRaw;
-  if (totalNonImportant === 0) {
-    historyRaw = totalImportant > 0 ? (importantAsked / totalImportant) * 100 : 0;
-  } else if (totalImportant === 0) {
-    historyRaw = (nonImportantAsked / totalNonImportant) * 100;
-  } else {
-    historyRaw =
-      ((importantAsked / totalImportant) * 0.7 + (nonImportantAsked / totalNonImportant) * 0.3) * 100;
-  }
-  const historyTaking = roundScore(historyRaw);
-
+  // 3. Investigation Selection Subscore (0 - 100)
   const relevantInvestigations = caseData.investigations.filter((i) => i.relevant);
   const totalRelevant = relevantInvestigations.length;
   const investigationById = new Map(caseData.investigations.map((i) => [i.id, i]));
@@ -106,14 +102,23 @@ export function computeScore(sessionState, caseData) {
 
   const investigationRaw =
     totalRelevant > 0
-      ? (relevantOrdered / totalRelevant) * 100 - irrelevantOrdered * 10
-      : 0;
-  const investigationSelection = roundScore(Math.max(0, investigationRaw));
+      ? (relevantOrdered / totalRelevant) * 100 - irrelevantOrdered * 5
+      : 100;
+  const investigationSelection = roundScore(Math.max(0, Math.min(100, investigationRaw)));
 
+  // 4. Diagnosis Subscore (0 - 100)
   const finalDiagnosis = sessionState.finalDiagnosis;
   const diagnosisCorrect = finalDiagnosis === caseData.correctDiagnosis;
-  const diagnosis = diagnosisCorrect ? 100 : 0;
+  const isDifferential = caseData.differentials?.includes(finalDiagnosis);
 
+  let diagnosis = 0;
+  if (diagnosisCorrect) {
+    diagnosis = 100;
+  } else if (isDifferential) {
+    diagnosis = 50;
+  }
+
+  // Critical Missed Items (ONLY genuinely critical facts omitted)
   const criticalMissedItems = criticalFacts
     .filter((f) => !askedSet.has(f.id))
     .map((f) => ({
@@ -121,12 +126,21 @@ export function computeScore(sessionState, caseData) {
       label: factMissedSentence(f),
     }));
 
+  // Overall Score Calculation (weighted process)
+  // History: 35%, Exam: 15%, Investigations: 25%, Diagnosis: 25%
   const weighted =
-    historyTaking * 0.35 + investigationSelection * 0.2 + diagnosis * 0.35;
-  const overall = roundScore(Math.max(0, weighted - criticalMissedItems.length * 5));
+    historyTaking * 0.35 +
+    clinicalExamination * 0.15 +
+    investigationSelection * 0.25 +
+    diagnosis * 0.25;
+
+  // Proportional 2-point penalty per missed critical fact
+  const overallPenalty = criticalMissedItems.length * 2;
+  const overall = roundScore(Math.max(0, Math.min(100, weighted - overallPenalty)));
 
   return {
     historyTaking,
+    clinicalExamination,
     investigationSelection,
     diagnosis,
     criticalMisses: {
@@ -140,6 +154,7 @@ export function computeScore(sessionState, caseData) {
 function emptyScore() {
   return {
     historyTaking: 0,
+    clinicalExamination: 0,
     investigationSelection: 0,
     diagnosis: 0,
     criticalMisses: { count: 0, items: [] },
@@ -150,15 +165,15 @@ function emptyScore() {
 /**
  * @param {SessionState | null} sessionState
  * @param {object} caseData
- * @returns {{ strengths: string[], gaps: string[] }}
+ * @returns {{ strengths: string[], gaps: string[], criticalErrors: string[], medicalRationale: string[] }}
  */
 export function generateFeedback(sessionState, caseData) {
-  if (!sessionState) {
-    return { strengths: [], gaps: [] };
+  if (!sessionState || !caseData) {
+    return { strengths: [], gaps: [], criticalErrors: [], medicalRationale: [] };
   }
 
-  const askedSet = new Set(sessionState.askedFacts);
-  const orderedList = sessionState.orderedInvestigations;
+  const askedSet = new Set(sessionState.askedFacts || []);
+  const orderedList = sessionState.orderedInvestigations || [];
   const orderedSet = new Set(orderedList);
   const performedSet = new Set(sessionState.performedExams || []);
   const finalDiagnosis = sessionState.finalDiagnosis;
@@ -169,7 +184,7 @@ export function generateFeedback(sessionState, caseData) {
   const strengths = [];
 
   for (const fact of caseData.facts) {
-    if (fact.critical && askedSet.has(fact.id)) {
+    if (askedSet.has(fact.id)) {
       strengths.push(factAskedSentence(fact));
     }
   }
@@ -190,52 +205,77 @@ export function generateFeedback(sessionState, caseData) {
   }
 
   if (diagnosisCorrect) {
-    strengths.push(`وصلتِ للتشخيص الصحيح: ${caseData.correctDiagnosis}`);
+    strengths.push(`التشخيص الصحيح: وصلتِ للتشخيص الدقيق وهو "${caseData.correctDiagnosis}"`);
   }
 
+  // Gaps: Missed non-critical facts and non-critical performed exams
   const gaps = [];
 
   for (const fact of caseData.facts) {
-    if (fact.critical && !askedSet.has(fact.id)) {
+    if (!fact.critical && !askedSet.has(fact.id)) {
       gaps.push(factMissedSentence(fact));
     }
   }
 
   if (caseData.physicalExam) {
     for (const [key, exam] of Object.entries(caseData.physicalExam)) {
+      if (!exam.relevant && performedSet.has(key)) {
+        gaps.push(`إجراء فحص سياقي/غير أساسي (${exam.label}) — لم يكن ضرورياً لتأكيد التشخيص الرئيسي.`);
+      }
+    }
+  }
+
+  // Critical Errors: ONLY genuinely critical missed facts, missed relevant core exams/tests, or wrong diagnosis
+  const criticalErrors = [];
+
+  for (const fact of caseData.facts) {
+    if (fact.critical && !askedSet.has(fact.id)) {
+      criticalErrors.push(factMissedSentence(fact));
+    }
+  }
+
+  if (caseData.physicalExam) {
+    for (const [key, exam] of Object.entries(caseData.physicalExam)) {
       if (exam.relevant && !performedSet.has(key)) {
-        gaps.push(examMissedSentence(exam));
+        criticalErrors.push(examMissedSentence(exam));
       }
     }
   }
 
   for (const inv of relevantInvestigations) {
     if (!orderedSet.has(inv.id)) {
-      gaps.push(investigationMissedSentence(inv));
+      criticalErrors.push(investigationMissedSentence(inv));
     }
   }
 
-  if (!diagnosisCorrect && finalDiagnosis) {
-    if (caseData.differentials.includes(finalDiagnosis)) {
-      gaps.push(
-        `التشخيص اللي اخترتيه (${finalDiagnosis}) تشخيص بديل معقول — راجعي التاريخ والفحوصات لتمييز ${caseData.correctDiagnosis}`,
+  if (!diagnosisCorrect) {
+    if (finalDiagnosis && caseData.differentials?.includes(finalDiagnosis)) {
+      criticalErrors.push(
+        `التشخيص المختار (${finalDiagnosis}) تشخيص تفريقي معقول — ولكن التشخيص الأحدث والأقوى بالمعطيات هو "${caseData.correctDiagnosis}"`,
+      );
+    } else if (finalDiagnosis) {
+      criticalErrors.push(
+        `التشخيص المختار (${finalDiagnosis}) غير صحيح — التشخيص الدقيق للحالة هو "${caseData.correctDiagnosis}"`,
       );
     } else {
-      const differentialHint = caseData.differentials.slice(0, 2).join('، ');
-      gaps.push(
-        `التشخيص الصحيح كان ${caseData.correctDiagnosis} — كان مفيد تفكري في بدائل زي ${differentialHint}`,
-      );
+      criticalErrors.push(`لم يتم تحديد التشخيص النهائي.`);
     }
   }
 
-  return { strengths, gaps };
+  // Dynamic Case-Specific Medical Rationale
+  const medicalRationale = Array.isArray(caseData.medicalRationale) ? caseData.medicalRationale : [];
+
+  return { strengths, gaps, criticalErrors, medicalRationale };
 }
 
 /**
  * @param {number} overall
  */
 export function getPerformanceLabel(overall) {
-  if (overall >= 80) return 'أداء جيد جدًا';
-  if (overall >= 50) return 'أداء متوسط';
-  return 'محتاج مراجعة';
+  if (overall >= 85) return 'أداء ممتاز (Outstanding)';
+  if (overall >= 70) return 'أداء جيد جداً (Very Good)';
+  if (overall >= 50) return 'أداء متوسط (Satisfactory)';
+  return 'يحتاج إلى مراجعة وتطوير (Needs Review)';
 }
+
+

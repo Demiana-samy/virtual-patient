@@ -32,8 +32,8 @@
 }
 
 .results-case-name {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
   color: var(--text-secondary);
   margin-bottom: var(--space-sm);
 }
@@ -121,17 +121,43 @@
   transition: width var(--transition-fast);
 }
 
-.subscore-card--misses .subscore-card__value {
-  color: var(--text-primary);
+/* ── Feedback Sections ── */
+
+.results-feedback-sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
 }
 
-/* ── Feedback columns ── */
-
-.results-feedback {
+.results-feedback-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-lg);
-  margin-bottom: var(--space-xl);
+}
+
+.feedback-section {
+  background: var(--surface-panel);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+}
+
+.feedback-section--critical {
+  background: #FFF5F5;
+  border: 1px solid #FEB2B2;
+}
+
+.feedback-section--critical .feedback-section__title {
+  color: #C53030;
+}
+
+.feedback-section--rationale {
+  background: #F0F9FF;
+  border: 1px solid #BAE6FD;
+}
+
+.feedback-section--rationale .feedback-section__title {
+  color: #0369A1;
 }
 
 .feedback-column {
@@ -140,7 +166,8 @@
   padding: var(--space-lg);
 }
 
-.feedback-column__title {
+.feedback-column__title,
+.feedback-section__title {
   font-size: 15px;
   font-weight: 600;
   color: var(--text-primary);
@@ -164,12 +191,24 @@
   border: 1px solid var(--border);
 }
 
+.feedback-item--critical {
+  border-color: #FEB2B2 !important;
+  color: #742A2A !important;
+  background: #FFF !important;
+}
+
+.feedback-item--rationale {
+  border-color: #BAE6FD !important;
+  color: #0C4A6E !important;
+  background: #FFF !important;
+}
+
 .feedback-list__empty {
   color: var(--text-secondary);
   font-style: normal;
-  background: transparent;
-  border: none;
-  padding: 0;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
 }
 
 /* ── Footer ── */
@@ -214,7 +253,7 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .results-feedback {
+  .results-feedback-grid {
     grid-template-columns: 1fr;
   }
 
@@ -222,3 +261,4 @@
     font-size: 44px;
   }
 }
+

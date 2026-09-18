@@ -89,24 +89,32 @@ async function handleSend() {
       }),
     });
 
-    const data = await response.json();
+    let data;
+    try {
+      data = await response.json();
+    } catch {
+      throw new Error(`استجابة الخادم غير صالحة (HTTP ${response.status})`);
+    }
 
-    if (!response.ok) {
-      throw new Error(data.error || 'Request failed');
+    if (!response.ok || !data.reply) {
+      throw new Error(data?.error || `فشل الاتصال بالخادم (رمز ${response.status})`);
     }
 
     conversationHistory.push({ role: 'user', content: text });
     conversationHistory.push({ role: 'assistant', content: data.reply });
 
     renderMessage('patient', data.reply);
-  } catch {
-    renderMessage('system', 'حدث خطأ في الاتصال. تأكد أن خادم الـ API يعمل على المنفذ 3000.');
+  } catch (err) {
+    // Restore text in chat input so user can easily retry
+    chatInput.value = text;
+    renderMessage('system', `حدث خطأ أثناء التواصل مع المريض: ${err.message || 'خطأ غير معروف'}. يمكنك إعادة المحاولة.`);
   } finally {
     isSending = false;
     setInputEnabled(true);
     chatInput.focus();
   }
 }
+
 
 let chatInitialized = false;
 

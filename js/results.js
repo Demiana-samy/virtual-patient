@@ -7,7 +7,7 @@ function toArabicNumerals(n) {
 /**
  * @param {HTMLElement} container
  * @param {ReturnType<import('./scoring.js').computeScore>} scoreResult
- * @param {{ strengths: string[], gaps: string[] }} feedback
+ * @param {ReturnType<import('./scoring.js').generateFeedback>} feedback
  * @param {object} caseData
  * @param {() => void} onRetry
  */
@@ -18,9 +18,10 @@ export function renderResults(container, scoreResult, feedback, caseData, onRetr
   container.className = 'results-view';
 
   const subScores = [
-    { key: 'historyTaking', label: 'أخذ التاريخ', value: scoreResult.historyTaking },
+    { key: 'historyTaking', label: 'أخذ التاريخ المرضي', value: scoreResult.historyTaking },
+    { key: 'clinicalExamination', label: 'الفحص السريري', value: scoreResult.clinicalExamination },
     { key: 'investigationSelection', label: 'اختيار الفحوصات', value: scoreResult.investigationSelection },
-    { key: 'diagnosis', label: 'التشخيص', value: scoreResult.diagnosis },
+    { key: 'diagnosis', label: 'التشخيص النهائي', value: scoreResult.diagnosis },
   ];
 
   container.innerHTML = `
@@ -42,7 +43,7 @@ export function renderResults(container, scoreResult, feedback, caseData, onRetr
           <div class="subscore-card">
             <div class="subscore-card__header">
               <span class="subscore-card__label">${s.label}</span>
-              <span class="subscore-card__value">${toArabicNumerals(s.value)}</span>
+              <span class="subscore-card__value">${toArabicNumerals(s.value)}%</span>
             </div>
             <div class="subscore-bar" role="presentation">
               <div class="subscore-bar__fill" style="width: ${s.value}%"></div>
@@ -50,46 +51,67 @@ export function renderResults(container, scoreResult, feedback, caseData, onRetr
           </div>`,
           )
           .join('')}
-        <div class="subscore-card subscore-card--misses">
-          <div class="subscore-card__header">
-            <span class="subscore-card__label">أخطاء حرجة</span>
-            <span class="subscore-card__value">${toArabicNumerals(scoreResult.criticalMisses.count)}</span>
-          </div>
-          <p class="subscore-card__hint">نقاط مهمة في التاريخ ما اتسألتش عنها</p>
-        </div>
       </div>
 
-      <div class="results-feedback">
-        <section class="feedback-column">
-          <h2 class="feedback-column__title">✓ إيه اللي عملته صح</h2>
+      <div class="results-feedback-sections">
+        ${
+          feedback.criticalErrors && feedback.criticalErrors.length > 0
+            ? `
+        <section class="feedback-section feedback-section--critical">
+          <h2 class="feedback-section__title">⚠️ أخطاء وملاحظات حرجة</h2>
           <ul class="feedback-list">
-            ${
-              feedback.strengths.length > 0
-                ? feedback.strengths.map((item) => `<li>${item}</li>`).join('')
-                : '<li class="feedback-list__empty">لم تُسجَّل نقاط قوة في هذه الجلسة</li>'
-            }
+            ${feedback.criticalErrors.map((item) => `<li class="feedback-item--critical">${item}</li>`).join('')}
           </ul>
-        </section>
-        <section class="feedback-column">
-          <h2 class="feedback-column__title">إيه اللي فاتك</h2>
+        </section>`
+            : ''
+        }
+
+        <div class="results-feedback-grid">
+          <section class="feedback-column">
+            <h2 class="feedback-column__title">✓ نقاط القوة والأداء الصحيح</h2>
+            <ul class="feedback-list">
+              ${
+                feedback.strengths && feedback.strengths.length > 0
+                  ? feedback.strengths.map((item) => `<li>${item}</li>`).join('')
+                  : '<li class="feedback-list__empty">لم تُسجَّل نقاط قوة رئيسية في هذه الجلسة</li>'
+              }
+            </ul>
+          </section>
+
+          <section class="feedback-column">
+            <h2 class="feedback-column__title">📌 نقاط فرعية لم تُستكمل</h2>
+            <ul class="feedback-list">
+              ${
+                feedback.gaps && feedback.gaps.length > 0
+                  ? feedback.gaps.map((item) => `<li>${item}</li>`).join('')
+                  : '<li class="feedback-list__empty">ممتاز — قمت باكتشاف كافة النقاط المساندة!</li>'
+              }
+            </ul>
+          </section>
+        </div>
+
+        ${
+          feedback.medicalRationale && feedback.medicalRationale.length > 0
+            ? `
+        <section class="feedback-section feedback-section--rationale">
+          <h2 class="feedback-section__title">💡 النصيحة والتعليل الطبي التعليمي</h2>
           <ul class="feedback-list">
-            ${
-              feedback.gaps.length > 0
-                ? feedback.gaps.map((item) => `<li>${item}</li>`).join('')
-                : '<li class="feedback-list__empty">ممتاز — مفيش نقاط فاتتك!</li>'
-            }
+            ${feedback.medicalRationale.map((item) => `<li class="feedback-item--rationale">${item}</li>`).join('')}
           </ul>
-        </section>
+        </section>`
+            : ''
+        }
       </div>
 
       <footer class="results-footer">
-        <button type="button" class="btn-retry" id="btn-retry">حاولي تاني</button>
+        <button type="button" class="btn-retry" id="btn-retry">إعادة الجلسة / حالة جديدة</button>
       </footer>
     </div>
   `;
 
   container.querySelector('#btn-retry')?.addEventListener('click', onRetry);
 }
+
 
 /**
  * @param {HTMLElement} resultsContainer

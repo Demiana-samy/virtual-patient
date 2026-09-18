@@ -1,6 +1,6 @@
 export const appendicitisCase = {
   id: 'appendicitis',
-  displayName: 'التهاب الزائدة الدودية',
+  displayName: 'التهاب الزائدة الدودية (Acute Appendicitis)',
 
   patient: {
     name: 'منى',
@@ -26,13 +26,13 @@ export const appendicitisCase = {
       patientAnswer: 'الألم اتحرك بعدين لتحت وناحية اليمين، ودلوقتي وجعي كله هناك',
       keywords: ['اتحرك', 'انتقل', 'مكان الألم دلوقتي', 'فين الألم', 'وين وجعك', 'migration', 'تحرك'],
       critical: true,
-      feedbackNote: 'من أهم علامات التهاب الزائدة الدودية',
+      feedbackNote: 'انتقال الألم من السرة إلى الربع السفلي الأيمن من أهم العلامات النمطية لالتهاب الزائدة',
     },
     {
       id: 'pain_character',
       clinicalFact: 'Progressively worsening constant pain localized to RLQ',
       patientAnswer: 'وجعي ثابت ومش بيروح، بيزيد تدريجياً، ومركز في أسفل البطن يمين',
-      keywords: ['نوع الألم', 'شكل الألم', 'وصف الألم', 'وجعك عامل إزاي', 'character', 'ثابت', 'حاد'],
+      keywords: ['نوع الألم', 'شكل الألم', 'وصف الألم', 'وجعك عامل إزاي', 'الألم مستمر', 'مستمر', 'بييجي ويروح', 'ثابت', 'مش بيروح', 'character', 'حاد'],
       critical: true,
       feedbackNote: 'الألم الثابت المتزايد في أسفل البطن يمين يدعم التهاب الزائدة',
     },
@@ -41,7 +41,7 @@ export const appendicitisCase = {
       clinicalFact: 'Low-grade fever (37.8–37.9°C) since onset',
       patientAnswer: 'حرارتي كانت ٣٧٫٨ امبارح، ودلوقتي حوالي ٣٧٫٩',
       keywords: ['حرارة', 'سخونة', 'حمى', 'fever', 'temperature', 'سخنت'],
-      critical: true,
+      critical: false,
       feedbackNote: 'الحمى منخفضة الدرجة شائعة مع التهاب الزائدة وتدعم وجود التهاب',
     },
     {
@@ -49,7 +49,7 @@ export const appendicitisCase = {
       clinicalFact: 'Nausea present; one episode of non-bilious vomiting',
       patientAnswer: 'حاسة بغثيان من امبارح، واتقيأت مرة واحدة',
       keywords: ['غثيان', 'تقيؤ', 'ترجيع', 'nausea', 'vomiting', 'عايزة أتقيأ'],
-      critical: true,
+      critical: false,
       feedbackNote: 'الغثيان والتقيؤ أعراض مرافقة شائعة في التهاب الزائدة',
     },
     {
@@ -57,8 +57,24 @@ export const appendicitisCase = {
       clinicalFact: 'Complete anorexia since symptom onset',
       patientAnswer: 'ماكلتش حاجة خالص من امبارح، مفيش أي شهية',
       keywords: ['شهية', 'أكل', 'appetite', 'anorexia', 'جوع', 'اكلت'],
-      critical: true,
-      feedbackNote: 'فقدان الشهية علامة مبكرة مهمة في التهاب الزائدة',
+      critical: false,
+      feedbackNote: 'فقدان الشهية علامة مبكرة مساندة في التهاب الزائدة',
+    },
+    {
+      id: 'peritoneal_signs',
+      clinicalFact: 'Pain worsens with movement, coughing, and walking',
+      patientAnswer: 'لما بتحرك أو بسعل أو أمشي الألم بيزيد أوي',
+      keywords: ['حركة', 'سعال', 'مشي', 'peritoneal', 'بيزيد لما', 'تتحركي', 'تسعلي'],
+      critical: false,
+      feedbackNote: 'زيادة الألم مع الحركة تدعم وجود تهيج صفاقي محلي',
+    },
+    {
+      id: 'lmp',
+      clinicalFact: 'Last menstrual period 10 days ago; regular cycles; not currently pregnant',
+      patientAnswer: 'آخر دورة شهرية كانت من ١٠ أيام، دورتي منتظمة ومفيش نزيف غير طبيعي',
+      keywords: ['دورة شهرية', 'LMP', 'حيض', 'آخر دورة', 'حامل', 'pregnancy', 'menstrual'],
+      critical: false,
+      feedbackNote: 'تاريخ الحيض مهم لاستبعاد التشخيصات التفريقية النساء والحوض',
     },
     {
       id: 'bowel_habits',
@@ -67,22 +83,6 @@ export const appendicitisCase = {
       keywords: ['براز', 'إسهال', 'إمساك', 'bowel', 'stool', 'تبرز', 'هضم'],
       critical: false,
       feedbackNote: 'استبعاد الإسهال يساعد في التفريق عن التهاب المعدة والأمعاء',
-    },
-    {
-      id: 'peritoneal_signs',
-      clinicalFact: 'Pain worsens with movement, coughing, and walking',
-      patientAnswer: 'لما بتحرك أو بسعل أو أمشي الألم بيزيد أوي',
-      keywords: ['حركة', 'سعال', 'مشي', 'peritoneal', 'بيزيد لما', 'تتحركي', 'تسعلي'],
-      critical: true,
-      feedbackNote: 'زيادة الألم مع الحركة تدعم وجود تهيج صفاقي',
-    },
-    {
-      id: 'lmp',
-      clinicalFact: 'Last menstrual period 10 days ago; regular cycles; not currently pregnant (patient unaware of test result)',
-      patientAnswer: 'آخر دورة شهرية كانت من ١٠ أيام، دورتي منتظمة ومفيش نزيف غير طبيعي',
-      keywords: ['دورة شهرية', 'LMP', 'حيض', 'آخر دورة', 'حامل', 'pregnancy', 'menstrual'],
-      critical: true,
-      feedbackNote: 'مهم لاستبعاد الحمل والحالات الحوضية في الإناث الشابات',
     },
     {
       id: 'urinary_symptoms',
@@ -106,7 +106,7 @@ export const appendicitisCase = {
       patientAnswer: 'مفيش إفرازات غريبة ولا ألم في الحوض غير وجع البطن اليمين',
       keywords: ['إفرازات', 'حوض', 'pelvic', 'discharge', 'مهبل'],
       critical: false,
-      feedbackNote: 'يساعد في استبعاد التهابات الحوض أو مشاكل gynecologic',
+      feedbackNote: 'يساعد في استبعاد التهابات الحوض أو مشاكل النساء',
     },
     {
       id: 'medications_allergies',
@@ -120,13 +120,13 @@ export const appendicitisCase = {
 
   physicalExam: {
     general: {
-      label: 'الفحص العام',
+      label: 'الفحص العام (General Examination)',
       result: 'المريضة تبدو في ألم وتتحرك بحذر شديد، الحرارة 37.9°م، النبض 92/دقيقة، ضغط الدم 118/75 مم زئبق',
       relevant: true,
       feedbackNote: 'تقييم العلامات الحيوية والمظهر العام أساسي لتحديد درجة التأثر والإجهاد الحاد',
     },
     abdominal: {
-      label: 'فحص البطن',
+      label: 'فحص البطن (Abdominal Examination)',
       result: 'ألم شديد عند الضغط في نقطة ماكبرني (McBurney\'s point)، مع وجود ألم مرتد (rebound tenderness) وتشنج دفاعي (guarding) في الربع السفلي الأيمن',
       relevant: true,
       feedbackNote: 'فحص البطن ووجود ألم مرتد وتشنج في أسفل البطن يمين من أهم العلامات السريرية لتأكيد التهاب الزائدة',
@@ -135,52 +135,51 @@ export const appendicitisCase = {
       label: 'تسمّع الصدر',
       result: 'أصوات التنفس طبيعية في كلا الرئتين، لا توجد حشرجة أو خرير',
       relevant: false,
-      feedbackNote: 'تسمّع الصدر فحص روتيني لاستبعاد المشاكل التنفسية ولكنه ليس الفحص الرئيسي لألم البطن الحاد',
+      feedbackNote: 'تسمّع الصدر فحص روتيني لاستبعاد المشاكل التنفسية',
     },
     special_signs: {
       label: 'علامات الزائدة الخاصة (Psoas & Obturator)',
       result: 'إيجابية علامة العضلة القطنية (Psoas sign) وعلامة المُسدّة (Obturator sign) على الجانب الأيمن',
-      relevant: true,
-      feedbackNote: 'إيجابية علامتي القطنية والمُسدّة تؤكد وجود تهيج صفاقي مجاور للزائدة الملتهبة',
+      relevant: false,
+      feedbackNote: 'علامات سريرية خاصة مساندة تثبت التهيج الصفاقي ولا تعتبر فحصاً إجبارياً للجميع',
     },
   },
-
 
   investigations: [
     {
       id: 'cbc',
-      label: 'تحليل دم كامل',
+      label: 'تحليل دم كامل (CBC)',
       result: 'ارتفاع في كرات الدم البيضاء (WBC: 14,000/µL) مع زيادة طفيفة في عدد العدلات (Neutrophils: 82%)',
       relevant: true,
       feedbackNote: 'يرفع الشك في عملية التهابية بارتفاع كرات الدم البيضاء',
     },
     {
       id: 'abdominal_us',
-      label: 'سونار بطن',
+      label: 'سونار بطن (Abdominal Ultrasound)',
       result: 'زائدة دودية غير قابلة للضغط، قطرها ٩ مم، مع زيادة في سمك جدارها ودهون حولها — يتفق مع التهاب الزائدة الدودية',
       relevant: true,
       feedbackNote: 'الفحص التصويري الأساسي لتأكيد التهاب الزائدة الدودية',
     },
     {
       id: 'urinalysis',
-      label: 'تحليل بول',
+      label: 'تحليل بول (Urinalysis)',
       result: 'طبيعي — لا صبغة صفراوية ولا نترات ولا كريات بيض في البول',
       relevant: false,
-      feedbackNote: 'يستبعد التهاب المسالك البولية كسبب لألم البطن',
+      feedbackNote: 'فحص مساند يستبعد التهاب المسالك البولية',
     },
     {
       id: 'pregnancy_test',
-      label: 'تحليل حمل',
+      label: 'تحليل حمل (Pregnancy Test)',
       result: 'سلبي',
       relevant: false,
-      feedbackNote: 'ضروري قبل التصوير أو التدخل في الإناث في سن الإنجاب',
+      feedbackNote: 'فحص مساند ضروري قبل التصوير الإشعاعي أو التدخل الجراحي في الإناث في سن الإنجاب',
     },
     {
       id: 'crp',
-      label: 'CRP',
+      label: 'بروتين C التفاعلي (CRP)',
       result: 'مرتفع (CRP: 48 mg/L) — يتفق مع عملية التهابية حادة',
-      relevant: true,
-      feedbackNote: 'يدعم وجود التهاب حاد في الجسم',
+      relevant: false,
+      feedbackNote: 'مؤشر التهابي مساند يدعم وجود عملية التهابية حادة',
     },
   ],
 
@@ -200,4 +199,11 @@ export const appendicitisCase = {
     'حمل خارج الرحم',
     'التهاب المعدة والأمعاء',
   ],
+
+  medicalRationale: [
+    'التهاب الزائدة الدودية الحاد (Acute Appendicitis): حالة جراحية طارئة تمتاز ببدء ألم حول السرة يليه انتقاله إلى الربع السفلي الأيمن للبطن.',
+    'التاريخ المرضي والفحص السريري: الانتقال النمطي للألم مع ألم مرتد وتشنج دفاعي في نقطة ماكبرني (McBurney\'s Point) يرفع الشك السريري بشكل كبير.',
+    'الفحوصات الطبية: يظهر تحليل CBC ارتفاعاً في كرات الدم البيضاء (Leukocytosis)، وتؤكد أشعة السونار (Abdominal Ultrasound) تضخم الزائدة وعدم قابليتها للضغط لتأكيد التشخيص قبل التدخل الجراحي.',
+  ],
 };
+
