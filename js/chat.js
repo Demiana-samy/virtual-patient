@@ -5,7 +5,7 @@ const messageList = document.getElementById('message-list');
 const chatInput = document.getElementById('chat-input');
 const sendButton = document.getElementById('btn-send');
 
-const API_URL = 'https://footrest-scratchy-lion.abasthan.app/api/chat';
+const API_URL = 'https://virtual-patient-production.up.railway.app/api/chat';
 
 /** @type {{ role: 'user' | 'assistant', content: string }[]} */
 let conversationHistory = [];
